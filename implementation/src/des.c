@@ -2,8 +2,9 @@
 #include <stdlib.h>
 
 
-uint64_t expand(uint32_t input) {
-	uint64_t output = 0;
+uint64_t expand_input(uint32_t input) {
+	uint64_t output;
+	output = 0;
 
 	/* 
 		Let consider input =   [01 02 03 04 05 06 07 08
@@ -33,15 +34,8 @@ uint64_t expand(uint32_t input) {
 	return output;
 }
 
-void feistel_round(uint32_t (f)(uint32_t), uint328t input, uint32_t key) {
-
-	/* Expansion of the key, with the first 16 bits to 1 */
-	uint64_t expanded_key = (2*65536 - 1 << 32) | (uint64_t) key;
-
-	uint64_t expand_input = expand(input);
-}
-
 int main(void) {
-	uint64_t aha = expand(0xCAFE);
+	uint64_t aha;
+	aha = expand_input(0xCAFE);
 	return 1;
 }
