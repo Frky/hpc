@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <stdint.h>
 
 uint64_t expand_input(uint32_t input) {
 	uint64_t output;
