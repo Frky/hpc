@@ -4,6 +4,9 @@
 
 #include "des.h"
 
+
+#define FAIL 	0xCA
+
 // Partially tested
 uint64_t expand_input(uint32_t input) {
 	/* From 32 bits in input, outputs 48 bits according
@@ -38,4 +41,28 @@ uint64_t expand_input(uint32_t input) {
 }
 
 
+uint8_t get_bit(uint32_t n, uint8_t i) {
+	/* Return the ith bit of an int n ; assuming that n = [ 01 02 03 .. 31 32 ]
+	 * It means that get_bit(0x02, 2) will return 0, and get_bit(0x02, 31) will return 1;
+	 *
+	 * If i is not a correct value, then it returns 0xCA */
+	
+	if (i > 32) {
+		return FAIL;
+	}
 
+	return (uint8_t) ((n >> (32 - i)) & 0x01);
+
+}
+
+// To be tested
+uint32_t permutation(uint32_t input) {
+
+	char oct1 = (char) (get_bit(input, 16) << 7 | get_bit(input, 7) << 6 | get_bit(input, 20) << 5 | get_bit(input, 21) << 4 | get_bit(input, 29) << 3 | get_bit(input, 12) << 2 | get_bit(input, 28) << 1 | get_bit(input, 17));
+	char oct2 = (char) (get_bit(input, 1) << 7 | get_bit(input, 15) << 6 | get_bit(input, 23) << 5 | get_bit(input, 26) << 4 | get_bit(input, 5) << 3 | get_bit(input, 18) << 2 | get_bit(input, 31) << 1 | get_bit(input, 10));
+	char oct3 = (char) (get_bit(input, 2) << 7 | get_bit(input, 8) << 6 | get_bit(input, 24) << 5 | get_bit(input, 14) << 4 | get_bit(input, 32) << 3 | get_bit(input, 27) << 2 | get_bit(input, 3) << 1 | get_bit(input, 9));
+	char oct4 = (char) (get_bit(input, 19) << 7 | get_bit(input, 13) << 6 | get_bit(input, 30) << 5 | get_bit(input, 6) << 4 | get_bit(input, 22) << 3 | get_bit(input, 11) << 2 | get_bit(input, 4) << 1 | get_bit(input, 25));
+
+	return (uint32_t) oct1 << 24 | (uint32_t) oct2 << 16 | (uint32_t) oct3 << 8 | (uint32_t) oct4;
+
+}
